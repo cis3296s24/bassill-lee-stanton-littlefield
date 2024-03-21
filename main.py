@@ -4,6 +4,7 @@ The main file holds menu operations for the game including sound, settings, lead
 
 """
 import pygame
+import redditwarp.SYNC
 from SecondMenu import SecondMenu
 from constants import BLUE, YELLOW, RED, GREEN
 from ScoreManager import ScoreManager
@@ -311,20 +312,31 @@ def menu_buttons():
 def templenews():
     # load image used in tutorial
     checkers_icon = pygame.image.load('pics/checkersguy_icon.png')
-    tutorial_screen = pygame.display.set_mode([Width, Height])
-    tutorial_screen.fill((128, 128, 128))
+    temple_screen = pygame.display.set_mode([Width, Height])
+    temple_screen.fill((128, 128, 128))
     
-    tutorial_font = pygame.font.Font(None, 64)
-    tutorial_text = tutorial_font.render("Welcome to Temple News!", True, (255, 255, 255))
-    tutorial_rect = tutorial_text.get_rect(center=(Width // 2, 50))
-    tutorial_screen.blit(tutorial_text, tutorial_rect)
-    
+    # get latest from r/Temple
+    client = redditwarp.SYNC.Client()
+    m = next(client.p.subreddit.pull.top('Temple', amount=1, time='hour'))
+    # print(m.title)
+    # print(m.permalink)
+
+    temple_font = pygame.font.Font(None, 64)
+    temple_text = temple_font.render(m.title, True, (255, 255, 255))
+    temple_rect = temple_text.get_rect(center=(Width // 2, 50))
+    temple_screen.blit(temple_text, temple_rect)
+
+    temple_font = pygame.font.Font(None, 64)
+    temple_text = temple_font.render(m.permalink, True, (255, 255, 255))
+    temple_rect = temple_text.get_rect(center=(Width // 2, 100))
+    temple_screen.blit(temple_text, temple_rect)
+ 
     # Exit button to return back to menu
     exit_button_font = pygame.font.Font(None, 32)
-    exit_button_text = exit_button_font.render("Exit Tutorial", True, (255, 255, 255))
+    exit_button_text = exit_button_font.render("Exit To Menu", True, (255, 255, 255))
     exit_button_rect = exit_button_text.get_rect(center=(Width // 2, Height - 50))
-    pygame.draw.rect(tutorial_screen, (64, 64, 64), exit_button_rect.inflate(20, 10))
-    tutorial_screen.blit(exit_button_text, exit_button_rect)
+    pygame.draw.rect(temple_screen, (64, 64, 64), exit_button_rect.inflate(20, 10))
+    temple_screen.blit(exit_button_text, exit_button_rect)
 
     pygame.display.flip()
 
