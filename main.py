@@ -318,7 +318,26 @@ def templenews():
     tutorial_text = tutorial_font.render("Welcome to Temple News!", True, (255, 255, 255))
     tutorial_rect = tutorial_text.get_rect(center=(Width // 2, 50))
     tutorial_screen.blit(tutorial_text, tutorial_rect)
-    return 0
+    
+    # Exit button to return back to menu
+    exit_button_font = pygame.font.Font(None, 32)
+    exit_button_text = exit_button_font.render("Exit Tutorial", True, (255, 255, 255))
+    exit_button_rect = exit_button_text.get_rect(center=(Width // 2, Height - 50))
+    pygame.draw.rect(tutorial_screen, (64, 64, 64), exit_button_rect.inflate(20, 10))
+    tutorial_screen.blit(exit_button_text, exit_button_rect)
+
+    pygame.display.flip()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if exit_button_rect.collidepoint(event.pos):  # if exit tutorial button is clicked
+                    return  # exit tutorial and return to menu
+            elif event.type == SONG_END:
+                music_loop()
 
 def tutorial(): 
     """
