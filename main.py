@@ -5,6 +5,8 @@ The main file holds menu operations for the game including sound, settings, lead
 """
 import pygame
 import redditwarp.SYNC
+from redditwarp.models.submission_SYNC import Submission as Submission_IO
+from redditwarp.models.submission import Submission
 import textwrap 
 from SecondMenu import SecondMenu
 from constants import BLUE, YELLOW, RED, GREEN
@@ -323,20 +325,26 @@ def templenews():
     # print(m.permalink)
     reddit_text = m.permalink;
 
-    temple_font = pygame.font.Font(None, 64)
-    temple_text = temple_font.render(m.title, True, (255, 255, 255))
-    temple_rect = temple_text.get_rect(center=(Width // 2, 50))
-    temple_screen.blit(temple_text, temple_rect)
-
-    # temple_font = pygame.font.Font(None, 30)
-    # temple_text = temple_font.render(m.permalink, True, (255, 255, 255))
-    # temple_rect = temple_text.get_rect(center=(Width // 2, 100))
+    # temple_font = pygame.font.Font(None, 64)
+    # temple_text = temple_font.render(m.title, True, (255, 255, 255))
+    # temple_rect = temple_text.get_rect(center=(Width // 2, 50))
     # temple_screen.blit(temple_text, temple_rect)
 
-    wraplen = 80
+    wraplen = 35
+    my_wrap = textwrap.TextWrapper(width=wraplen)
+    wrap_list = my_wrap.wrap(text=m.title)
+    x = 50;
+    # Draw one line at a time further down the screen
+    for i in wrap_list:
+        x = x+50
+        temple_font = pygame.font.Font(None, 64)
+        temple_text = temple_font.render(i, True, (255, 255, 255))
+        temple_rect = temple_text.get_rect(center=(Width // 2, 50 + x))
+        temple_screen.blit(temple_text, temple_rect)
+
+    wraplen = 70
     my_wrap = textwrap.TextWrapper(width=wraplen)
     wrap_list = my_wrap.wrap(text=reddit_text)
-    x = 50;
     # Draw one line at a time further down the screen
     for i in wrap_list:
         x = x+50
