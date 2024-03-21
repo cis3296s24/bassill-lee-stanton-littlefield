@@ -4,6 +4,8 @@ The main file holds menu operations for the game including sound, settings, lead
 
 """
 import pygame
+import redditwarp.SYNC
+import textwrap 
 from SecondMenu import SecondMenu
 from constants import BLUE, YELLOW, RED, GREEN
 from ScoreManager import ScoreManager
@@ -85,6 +87,8 @@ def main():
                     settings()
                 elif buttons[4].collidepoint(event.pos): # if mouse is clicked on leaderboard button (not yet implemented)
                     board_customization()
+                elif buttons[5].collidepoint(event.pos):
+                    templenews();
                 # Check if the current song has finished, loop to next song
             elif event.type == SONG_END:
                 music_loop()
@@ -116,16 +120,16 @@ def menu_buttons():
     startgame_icon = pygame.image.load('pics/start_icon.png')
     # Draw the icon next to the text with the specified size
     startgame_icon_resized = pygame.transform.scale(startgame_icon, icon_size)
-    startgame_icon_rect = startgame_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 3 + (button_height - icon_size[1] - 50) // 2))
+    startgame_icon_rect = startgame_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 4 + (button_height - icon_size[1] - 50) // 2))
 
     color = (128, 128, 128) # grey
     cursor_color = (100, 100, 100) # darker grey
-    position = (Width // 2-150, Height // 3-25)
+    position = (Width // 2-150, Height // 4-25)
     size = (300, 50)  # width, height
         
     button_font = pygame.font.Font(None, 32)
     button_text = button_font.render("Start Game", True, (255, 255, 255)) # Button text and color
-    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 3))
+    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 4))
     
     # Create button on screen using position and size parameters
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
@@ -146,15 +150,15 @@ def menu_buttons():
     # Settings Button    
     settings_icon = pygame.image.load('pics/settings_icon.png')
 
-    position = (Width // 2 - 150, Height // 3 + button_height + spacing)
+    position = (Width // 2 - 150, Height // 4 + button_height + spacing)
     size = (300, button_height)  # width, height
 
     button_text = button_font.render("Settings", True, (255, 255, 255))  # Button text and color
-    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 3 + button_height + spacing + button_height // 2))
+    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 4 + button_height + spacing + button_height // 2))
 
     # Draw the icon next to the text with the specified size
     settings_icon_resized = pygame.transform.scale(settings_icon, icon_size)
-    settings_icon_rect = settings_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 3 + button_height + spacing + (button_height - icon_size[1]) // 2))
+    settings_icon_rect = settings_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 4 + button_height + spacing + (button_height - icon_size[1]) // 2))
 
     # Create button on screen using position and size parameters
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
@@ -177,18 +181,18 @@ def menu_buttons():
 
     color = (128, 128, 128) # grey
     cursor_color = (100, 100, 100) # darker grey
-    position = (Width // 2-150, Height // 3 + 135)
+    position = (Width // 2-150, Height // 4 + 135)
     size = (300, 50)  # width, height
 
     button_font = pygame.font.Font(None, 32)
     button_text = button_font.render("Tutorial", True, (255, 255, 255)) # Button text and color
-    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 3+160))
+    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 4+160))
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
     screen.blit(button_text, button_text_rect)
 
     # Draw the icon next to the text with the specified size
     tutorial_icon_resized = pygame.transform.scale(tutorial_icon, icon_size)
-    tutorial_icon_rect = tutorial_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 3 + 135 + (button_height - icon_size[1]) // 2))
+    tutorial_icon_rect = tutorial_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 4 + 135 + (button_height - icon_size[1]) // 2))
 
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
     screen.blit(button_text, button_text_rect)
@@ -209,19 +213,19 @@ def menu_buttons():
 
     color = (128, 128, 128) # grey
     cursor_color = (100, 100, 100) # darker grey
-    position = (Width // 2 - 150, Height // 3 + 210)  # Adjust the vertical position as needed
+    position = (Width // 2 - 150, Height // 4 + 210)  # Adjust the vertical position as needed
     size = (300, 50)  # width, height
 
     button_font = pygame.font.Font(None, 32)
     button_text = button_font.render("View Rankings", True, (255, 255, 255)) # Button text and color
-    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 3 + 235))  # Adjust the vertical position as needed
+    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 4 + 235))  # Adjust the vertical position as needed
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
     screen.blit(button_text, button_text_rect)
 
     # Draw the icon next to the text with the specified size
     leaderboard_icon_resized = pygame.transform.scale(leaderboard_icon, icon_size)
     leaderboard_icon_rect = leaderboard_icon_resized.get_rect(
-    topleft=(Width // 2 - 150 + 10, Height // 3 + 210 + (button_height - icon_size[1]) // 2))
+    topleft=(Width // 2 - 150 + 10, Height // 4 + 210 + (button_height - icon_size[1]) // 2))
 
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
     screen.blit(button_text, button_text_rect)
@@ -244,18 +248,18 @@ def menu_buttons():
 
     color = (128, 128, 128) # grey
     cursor_color = (100, 100, 100) # darker grey
-    position = (Width // 2 - 150, Height // 3 + 285)  # Adjust the vertical position as needed
+    position = (Width // 2 - 150, Height // 4 + 285)  # Adjust the vertical position as needed
     size = (300, 50)  # width, height
 
     button_font = pygame.font.Font(None, 32)
     button_text = button_font.render("Customize Board", True, (255, 255, 255)) # Button text and color
-    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 3 + 310))  # Adjust the vertical position as needed
+    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 4 + 310))  # Adjust the vertical position as needed
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
     screen.blit(button_text, button_text_rect)
 
     # Draw the icon next to the text with the specified size
     board_icon_resized = pygame.transform.scale(board_icon, icon_size)
-    board_icon_rect = board_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 3 + 285 + (button_height - icon_size[1]) // 2))
+    board_icon_rect = board_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 4 + 285 + (button_height - icon_size[1]) // 2))
 
     pygame.draw.rect(screen, color, pygame.Rect(position, size))
     screen.blit(button_text, button_text_rect)
@@ -271,7 +275,99 @@ def menu_buttons():
     screen.blit(board_icon_resized, board_icon_rect.topleft)  # Draw the icon after drawing the button
     screen.blit(button_text, button_text_rect)
 
-    return button_rect, button_rect_2, button_rect_3, button_rect_4, button_rect_5
+    #Customize TEMPLE NEWS Button
+    board_icon = pygame.image.load('pics/Temple.png')
+
+    color = (128, 128, 128) # grey
+    cursor_color = (100, 100, 100) # darker grey
+    position = (Width // 2 - 150, Height // 4 + 360)  # Adjust the vertical position as needed
+    size = (300, 50)  # width, height
+
+    button_font = pygame.font.Font(None, 32)
+    button_text = button_font.render("TEMPLE NEWS", True, (255, 255, 255)) # Button text and color
+    button_text_rect = button_text.get_rect(center=(Width // 2, Height // 4 + 385))  # Adjust the vertical position as needed
+    pygame.draw.rect(screen, color, pygame.Rect(position, size))
+    screen.blit(button_text, button_text_rect)
+
+    # Draw the icon next to the text with the specified size
+    board_icon_resized = pygame.transform.scale(board_icon, icon_size)
+    board_icon_rect = board_icon_resized.get_rect(topleft=(Width // 2 - 150 + 10, Height // 4 + 360 + (button_height - icon_size[1]) // 2))
+
+    pygame.draw.rect(screen, color, pygame.Rect(position, size))
+    screen.blit(button_text, button_text_rect)
+
+    # Used to indicate if cursor is hovering over button. If so, button will be darker
+    mouse = pygame.mouse.get_pos()
+    button_rect_6 = pygame.Rect(position, size)
+    if button_rect_6.collidepoint(mouse):
+        pygame.draw.rect(screen, cursor_color, button_rect_6)  # Change color when cursor hovered over
+    else:
+        pygame.draw.rect(screen, color, button_rect_6) # stay original color if cursor not hovering over
+
+    screen.blit(board_icon_resized, board_icon_rect.topleft)  # Draw the icon after drawing the button
+    screen.blit(button_text, button_text_rect)
+
+
+    return button_rect, button_rect_2, button_rect_3, button_rect_4, button_rect_5, button_rect_6
+
+def templenews():
+    # load image used in tutorial
+    checkers_icon = pygame.image.load('pics/checkersguy_icon.png')
+    temple_screen = pygame.display.set_mode([Width, Height])
+    temple_screen.fill((128, 128, 128))
+    
+    # get latest from r/Temple
+    client = redditwarp.SYNC.Client()
+    m = next(client.p.subreddit.pull.top('Temple', amount=1, time='hour'))
+    # print(m.title)
+    # print(m.permalink)
+    reddit_text = m.permalink;
+
+    temple_font = pygame.font.Font(None, 64)
+    temple_text = temple_font.render(m.title, True, (255, 255, 255))
+    temple_rect = temple_text.get_rect(center=(Width // 2, 50))
+    temple_screen.blit(temple_text, temple_rect)
+
+    # temple_font = pygame.font.Font(None, 30)
+    # temple_text = temple_font.render(m.permalink, True, (255, 255, 255))
+    # temple_rect = temple_text.get_rect(center=(Width // 2, 100))
+    # temple_screen.blit(temple_text, temple_rect)
+
+    wraplen = 80
+    my_wrap = textwrap.TextWrapper(width=wraplen)
+    wrap_list = my_wrap.wrap(text=reddit_text)
+    x = 50;
+    # Draw one line at a time further down the screen
+    for i in wrap_list:
+        x = x+50
+        temple_font = pygame.font.Font(None, 30)
+        temple_text = temple_font.render(i, True, (255, 255, 255))
+        temple_rect = temple_text.get_rect(center=(Width // 2, 100 + x))
+        temple_screen.blit(temple_text, temple_rect)
+
+    # Update All Window and contents
+    # pygame.display.update()
+
+ 
+    # Exit button to return back to menu
+    exit_button_font = pygame.font.Font(None, 32)
+    exit_button_text = exit_button_font.render("Exit To Menu", True, (255, 255, 255))
+    exit_button_rect = exit_button_text.get_rect(center=(Width // 2, Height - 50))
+    pygame.draw.rect(temple_screen, (64, 64, 64), exit_button_rect.inflate(20, 10))
+    temple_screen.blit(exit_button_text, exit_button_rect)
+
+    pygame.display.flip()
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                return
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if exit_button_rect.collidepoint(event.pos):  # if exit tutorial button is clicked
+                    return  # exit tutorial and return to menu
+            elif event.type == SONG_END:
+                music_loop()
 
 def tutorial(): 
     """
