@@ -5,8 +5,8 @@ The main file holds menu operations for the game including sound, settings, lead
 """
 import pygame
 import redditwarp.SYNC
-from redditwarp.models.submission_SYNC import Submission as Submission_IO
-from redditwarp.models.submission import Submission
+# from redditwarp.models.submission_SYNC import Submission as Submission_IO
+# from redditwarp.models.submission import Submission
 import textwrap 
 from SecondMenu import SecondMenu
 from constants import BLUE, YELLOW, RED, GREEN
@@ -320,7 +320,7 @@ def templenews():
     
     # get latest from r/Temple
     client = redditwarp.SYNC.Client()
-    m = next(client.p.subreddit.pull.top('Temple', amount=1, time='hour'))
+    m = next(client.p.subreddit.pull.top('Temple', amount=1, time='month'))
     # print(m.title)
     # print(m.permalink)
     reddit_text = m.permalink;
