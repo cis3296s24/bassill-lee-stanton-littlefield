@@ -632,15 +632,48 @@ def board_customization():
     pygame.draw.rect(board_customization_screen, (128, 128, 128), box_rect)
     board_customization_screen.blit(board_color_text, text_rect)
         
-    square_side = 50  # Size of the square
-    red_square_rect = pygame.Rect(text_rect.right + 50, text_rect.centery - square_side // 2, square_side, square_side)
-    pygame.draw.rect(board_customization_screen, RED, red_square_rect)  # Red square
-    blue_square_rect = pygame.Rect(red_square_rect.right + 20, red_square_rect.top, square_side, square_side)
-    pygame.draw.rect(board_customization_screen, BLUE, blue_square_rect)  # Blue square
-    yellow_square_rect = pygame.Rect(blue_square_rect.right + 20, blue_square_rect.top, square_side, square_side)
-    pygame.draw.rect(board_customization_screen, YELLOW, yellow_square_rect)  # Yellow square
-    green_square_rect = pygame.Rect(yellow_square_rect.right + 20, yellow_square_rect.top, square_side, square_side)
-    pygame.draw.rect(board_customization_screen, GREEN, green_square_rect)  # Green square
+    # Board Color Rectangles
+    board_square_side = 50  # Size of the square
+    board_red_square_rect = pygame.Rect(text_rect.right + 50, text_rect.centery - board_square_side // 2,
+                                        board_square_side, board_square_side)
+    pygame.draw.rect(board_customization_screen, RED, board_red_square_rect)  # Red square
+    board_blue_square_rect = pygame.Rect(board_red_square_rect.right + 20, board_red_square_rect.top, board_square_side,
+                                         board_square_side)
+    pygame.draw.rect(board_customization_screen, BLUE, board_blue_square_rect)  # Blue square
+    board_yellow_square_rect = pygame.Rect(board_blue_square_rect.right + 20, board_blue_square_rect.top,
+                                           board_square_side, board_square_side)
+    pygame.draw.rect(board_customization_screen, YELLOW, board_yellow_square_rect)  # Yellow square
+    board_green_square_rect = pygame.Rect(board_yellow_square_rect.right + 20, board_yellow_square_rect.top,
+                                          board_square_side, board_square_side)
+    pygame.draw.rect(board_customization_screen, GREEN, board_green_square_rect)  # Green square
+
+    # User Checker Color Text
+    user_checker_font = pygame.font.Font(None, 32)
+    user_checker_text = user_checker_font.render("User Checker Color", True, (255, 255, 255))
+    user_checker_rect = user_checker_text.get_rect(center=(Width // 2 - 240, Height // 3 + 150))
+    # Enlarge the box behind the text
+    user_checker_box_width = user_checker_rect.width + 40  # Increase width
+    user_checker_box_height = user_checker_rect.height + 20  # Increase height
+    user_checker_box_rect = pygame.Rect(user_checker_rect.left - 20, user_checker_rect.top - 10, user_checker_box_width,
+                                        user_checker_box_height)
+    # Draw the enlarged box behind the text
+    pygame.draw.rect(board_customization_screen, (128, 128, 128), user_checker_box_rect)
+    board_customization_screen.blit(user_checker_text, user_checker_rect)
+
+    # User Checker Color Rectangles
+    user_square_side = 50  # Size of the square
+    user_red_square_rect = pygame.Rect(user_checker_rect.right + 50, user_checker_rect.centery - user_square_side // 2,
+                                  user_square_side, user_square_side)
+    pygame.draw.rect(board_customization_screen, RED, user_red_square_rect)  # Red square
+    user_blue_square_rect = pygame.Rect(user_red_square_rect.right + 20, user_red_square_rect.top, user_square_side,
+                                        user_square_side)
+    pygame.draw.rect(board_customization_screen, BLUE, user_blue_square_rect)  # Blue square
+    user_yellow_square_rect = pygame.Rect(user_blue_square_rect.right + 20, user_blue_square_rect.top, user_square_side,
+                                          user_square_side)
+    pygame.draw.rect(board_customization_screen, YELLOW, user_yellow_square_rect)  # Yellow square
+    user_green_square_rect = pygame.Rect(user_yellow_square_rect.right + 20, user_yellow_square_rect.top,
+                                         user_square_side, user_square_side)
+    pygame.draw.rect(board_customization_screen, GREEN, user_green_square_rect)  # Green square
 
     pygame.display.flip()
 
@@ -652,13 +685,13 @@ def board_customization():
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 if exit_button_rect.collidepoint(event.pos):  # if exit settings button is clicked
                     return
-                if red_square_rect.collidepoint(event.pos): # make board red
+                if board_red_square_rect.collidepoint(event.pos): # make board red
                     second_menu_instance.color = RED
-                if blue_square_rect.collidepoint(event.pos): # make board blue
+                if board_blue_square_rect.collidepoint(event.pos): # make board blue
                     second_menu_instance.color = BLUE
-                if yellow_square_rect.collidepoint(event.pos): # make board yellow
+                if board_yellow_square_rect.collidepoint(event.pos): # make board yellow
                     second_menu_instance.color = YELLOW
-                if green_square_rect.collidepoint(event.pos): # make board green
+                if board_green_square_rect.collidepoint(event.pos): # make board green
                     second_menu_instance.color = GREEN
             elif event.type == SONG_END:
                 music_loop()
