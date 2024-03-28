@@ -649,7 +649,7 @@ def board_customization():
 
     # User Checker Color Text
     user_checker_font = pygame.font.Font(None, 32)
-    user_checker_text = user_checker_font.render("User Checker Color", True, (255, 255, 255))
+    user_checker_text = user_checker_font.render("Player One Checker Color", True, (255, 255, 255))
     user_checker_rect = user_checker_text.get_rect(center=(Width // 2 - 240, Height // 3 + 150))
     # Enlarge the box behind the text
     user_checker_box_width = user_checker_rect.width + 40  # Increase width
@@ -693,6 +693,14 @@ def board_customization():
                     second_menu_instance.color = YELLOW
                 if board_green_square_rect.collidepoint(event.pos): # make board green
                     second_menu_instance.color = GREEN
+                if user_red_square_rect.collidepoint(event.pos): # make user red
+                    second_menu_instance.user_color = RED
+                if user_blue_square_rect.collidepoint(event.pos): # make user blue
+                    second_menu_instance.user_color = BLUE
+                if user_yellow_square_rect.collidepoint(event.pos): # make user yellow
+                    second_menu_instance.user_color = YELLOW
+                if user_green_square_rect.collidepoint(event.pos): # make user green
+                    second_menu_instance.user_color = GREEN
             elif event.type == SONG_END:
                 music_loop()
 
