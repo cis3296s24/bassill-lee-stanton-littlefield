@@ -13,13 +13,14 @@ class Main_Board:
     evaluate the board, get all pieces, get a single piece, move a piece (left or right), create the board, draw the board, 
     remove a piece, and check for a winner.
     """
-    def __init__(self, color, user_color):
+    def __init__(self, color, user_color, user_two_color):
         """
         The init function initializes the Main_Board class with a color and creates the board.
         """
         self.board = []
         self.color = color
         self.user_color = user_color
+        self.user_two_color = user_two_color
         self.red_left = self.white_left = 12
         self.red_kings = self.white_kings = 0
         self.create_board()
@@ -58,7 +59,7 @@ class Main_Board:
         piece.move(row, col)
         if row == ROWS - 1 or row == 0:
             piece.make_king()
-            if piece.color == WHITE:
+            if piece.color == self.user_two_color:
                 self.white_kings += 1
             else:
                 self.red_kings += 1 
@@ -81,7 +82,7 @@ class Main_Board:
             for col in range(COLS):
                 if col % 2 == ((row +  1) % 2):
                     if row < 3:
-                        self.board[row].append(Piece(row, col, WHITE))
+                        self.board[row].append(Piece(row, col, self.user_two_color))
                     elif row > 4:
                         self.board[row].append(Piece(row, col, self.user_color))
                     else:
@@ -118,8 +119,8 @@ class Main_Board:
         If a user has no pieces left or no moves left, the other user is the winner.
         """
         if self.red_left <= 0 or self.no_moves(self.user_color):
-            return WHITE
-        elif self.white_left <= 0 or self.no_moves(WHITE):
+            return self.user_two_color
+        elif self.white_left <= 0 or self.no_moves(self.user_two_color):
             return self.user_color
         
         return None 
@@ -135,7 +136,7 @@ class Main_Board:
         if piece.color == self.user_color or piece.king:
             moves.update(self.move_left(row -1, max(row-3, -1), -1, piece.color, left))
             moves.update(self.move_right(row -1, max(row-3, -1), -1, piece.color, right))
-        if piece.color == WHITE or piece.king:
+        if piece.color == self.user_two_color or piece.king:
             moves.update(self.move_left(row +1, min(row+3, ROWS), 1, piece.color, left))
             moves.update(self.move_right(row +1, min(row+3, ROWS), 1, piece.color, right))
 
